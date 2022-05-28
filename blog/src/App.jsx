@@ -1,10 +1,19 @@
+//css
 import './styles/App.css'
-import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
+
+//react router dom
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+
+//firebase
+import { onAuthStateChanged } from 'firebase/auth'
+
+//hooks 
+import { useState,useEffect } from 'react'
+import { useAuthentication } from './hooks/useAuthentication'
 
 // pages
 import Home from './pages/home/Home.jsx'
 import About from './pages/about/About.jsx'
-
 
 //components
 import NavBar from './components/navbar/NavBar.jsx'
@@ -12,23 +21,46 @@ import Footer from './components/footer/Footer.jsx'
 import Register from './pages/register/Register'
 import Login from './pages/login/Login'
 
+//context
+import { AuthProvider } from './context/AuthContext'
+
+
 function App() {
+
+    const [user, setUser] = useState(undefined)
+    const { auth } = useAuthentication()
+
+    const loadingUser = user === undefined
+
+    useEffect(() => {
+
+      onAuthStateChanged(auth, (user) => {
+        setUser(user)
+      })
+
+    },[auth])
+    
+    if (loadingUser){
+      return <p>Carregando...</p>
+    }
 
 
   return (
     <div className="App">
-      <BrowserRouter>
-      <NavBar />
-        <div className='container'>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login />} />
-          </Routes>
-        </div>
-        <Footer />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <NavBar />
+          <div className='container'>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/about' element={<About />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/login' element={<Login />} />
+            </Routes>
+          </div>
+          <Footer />
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   )
 }
