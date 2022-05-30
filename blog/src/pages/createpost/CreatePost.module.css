@@ -1,0 +1,21 @@
+.create_post {
+    text-align: center;
+}
+
+.create_post h2 {
+    font-size: 2.2rem;
+}
+
+.create_post p {
+    color: #aaa;
+    margin-bottom: 2em;
+}
+.error {
+    background-color: rgba(255, 0, 0, 0.336);
+    color: red !important;
+    width: 20rem;
+    margin: 2rem auto;
+    padding: .5rem;
+    text-align: center;
+    border-radius: 1rem;
+}
