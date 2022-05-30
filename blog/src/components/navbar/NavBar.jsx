@@ -1,8 +1,19 @@
+// hooks
+import { useAuthentication } from "../../hooks/useAuthentication";
+
+//context
+import { useAuthValue } from "../../context/AuthContext";
+
+// react Router
 import { NavLink } from "react-router-dom";
 
+// css
 import styles from "./NavBar.module.css";
 
 const Navbar = () => {
+
+  const { user } = useAuthValue()
+
 
   return (
     <nav className={styles.navbar}>
@@ -13,15 +24,18 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/"
-            className={({isActive}) => (isActive ? styles.active : '')}
+            className={({ isActive }) => (isActive ? styles.active : '')}
           >
             Home
           </NavLink>
         </li>
-        <li>
+      {/* if user was logged, this may not appear */}
+       {!user && 
+       ( <>
+           <li>
           <NavLink
             to="/login"
-            className={({isActive}) => isActive ? styles.active : ''}
+            className={({ isActive }) => isActive ? styles.active : ''}
           >
             Entrar
           </NavLink>
@@ -29,15 +43,37 @@ const Navbar = () => {
         <li>
           <NavLink
             to="/register"
-            className={({isActive}) => isActive ? styles.active : ''}
+            className={({ isActive }) => isActive ? styles.active : ''}
           >
             Cadastrar
           </NavLink>
         </li>
+        </>)
+       }
+       {user && 
+        <>
+         <li>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) => isActive ? styles.active : ''}
+          >
+            Dashboard
+          </NavLink>
+        </li>
+         <li>
+          <NavLink
+            to="/post"
+            className={({ isActive }) => isActive ? styles.active : ''}
+          >
+            Posts
+          </NavLink>
+        </li>
+        </>
+       }
         <li>
           <NavLink
             to="/about"
-            className={({isActive}) => isActive ? styles.active : ''}
+            className={({ isActive }) => isActive ? styles.active : ''}
           >
             Sobre
           </NavLink>

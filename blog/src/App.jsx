@@ -14,6 +14,8 @@ import { useAuthentication } from './hooks/useAuthentication'
 // pages
 import Home from './pages/home/Home.jsx'
 import About from './pages/about/About.jsx'
+import Dashboard from './pages/dashboard/Dashboard'
+import CreatePost from './pages/createpost/CreatePost'
 
 //components
 import NavBar from './components/navbar/NavBar.jsx'
@@ -47,7 +49,7 @@ function App() {
 
   return (
     <div className="App">
-      <AuthProvider>
+      <AuthProvider value={{ user }}>
         <BrowserRouter>
           <NavBar />
           <div className='container'>
@@ -56,6 +58,8 @@ function App() {
               <Route path='/about' element={<About />} />
               <Route path='/register' element={<Register />} />
               <Route path='/login' element={<Login />} />
+              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='/post' element={<CreatePost />} />
             </Routes>
           </div>
           <Footer />
