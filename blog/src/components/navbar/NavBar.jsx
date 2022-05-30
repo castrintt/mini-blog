@@ -9,10 +9,12 @@ import { NavLink } from "react-router-dom";
 
 // css
 import styles from "./NavBar.module.css";
+import { useEffect } from "react";
 
 const Navbar = () => {
 
   const { user } = useAuthValue()
+  const { logout } = useAuthentication()
 
 
   return (
@@ -79,6 +81,17 @@ const Navbar = () => {
             Sobre
           </NavLink>
         </li>
+        {user && 
+          <>
+            <li>
+              <button
+                onClick={logout}
+              >
+                Sair
+              </button>
+            </li>
+          </>
+        }
       </ul>
     </nav>
   );

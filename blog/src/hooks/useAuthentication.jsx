@@ -8,7 +8,7 @@ import {
     signOut
 } from 'firebase/auth'
 
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
 export const useAuthentication = () => {
     const [error, setError] = useState(null)
@@ -21,18 +21,20 @@ export const useAuthentication = () => {
     const auth = getAuth()
 
     function checkIfIsCancelled() {
-        if (cancelled){
+        if (cancelled) {
             return
         }
     }
 
-    async function createUser (data){
+
+    // register
+    async function createUser(data) {
         checkIfIsCancelled()
 
         setLoading(true)
         setError(null)
 
-        try{
+        try {
             const { user } = await createUserWithEmailAndPassword(
                 auth,
                 data.email,
@@ -40,38 +42,49 @@ export const useAuthentication = () => {
             )
 
             await updateProfile(user, {
-                displayName:data.displayName
+                displayName: data.displayName
             })
             setLoading(false)
 
             return user
 
-        }catch(error) {
+        } catch (error) {
             console.log(error.message)
             console.log(typeof error.message)
 
 
-            if(error.message.includes('Password')){
+            if (error.message.includes('Password')) {
                 setError('A senha deve ter ao menos 6 caracteres.')
                 setLoading(false)
-            }else if (error.message.includes('email-already-in-use')){
+            } else if (error.message.includes('email-already-in-use')) {
                 setError('E-mail ja cadastrado.')
                 setLoading(false)
-            }else{
+            } else {
                 setError('Ocorreu um erro, por favor tente novamente mais tarde.')
                 setLoading(false)
             }
-        }    
+        }
+    }
+
+    //logout
+
+    const logout = () => {
+
+        checkIfIsCancelled()
+        signOut(auth)
+
     }
 
     useEffect(() => {
         return () => setCancelled(true)
-    },[])
+    }, [])
 
     return {
         auth,
         createUser,
         error,
         loading,
+        logout,
+
     }
 }
