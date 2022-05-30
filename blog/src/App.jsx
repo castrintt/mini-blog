@@ -59,7 +59,7 @@ function App() {
               <Route path='/register' element={<Register />} />
               <Route path='/login' element={<Login />} />
               <Route path='/dashboard' element={<Dashboard />} />
-              <Route path='/post' element={<CreatePost />} />
+              <Route path='/post/create' element={<CreatePost />} />
             </Routes>
           </div>
           <Footer />

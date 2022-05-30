@@ -50,6 +50,7 @@ const Navbar = () => {
         </li>
         </>)
        }
+       {/* if user was logged, this may appear  */}
        {user && 
         <>
          <li>
@@ -62,10 +63,10 @@ const Navbar = () => {
         </li>
          <li>
           <NavLink
-            to="/post"
+            to="/post/create"
             className={({ isActive }) => isActive ? styles.active : ''}
           >
-            Posts
+            Novo post
           </NavLink>
         </li>
         </>
