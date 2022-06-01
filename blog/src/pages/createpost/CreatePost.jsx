@@ -32,16 +32,14 @@ const CreatePost = () => {
     // create tags array
     const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase());
 
-    console.log(state);
-
-    console.log({
-      title,
-      image,
-      body,
-      tags: tagsArray,
-      uid: user.uid,
-      createdBy: user.displayName,
-    });
+    // console.log({
+    //   title,
+    //   image,
+    //   body,
+    //   tags: tagsArray,
+    //   uid: user.uid,
+    //   createdBy: user.displayName,
+    // });
 
     if (formError) return
 
