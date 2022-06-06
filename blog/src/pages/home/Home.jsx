@@ -38,9 +38,6 @@ const Home = () => {
       </form>
       <div className="post-list">
         {loading && <p>Carregando...</p>}
-        {posts && posts.map((post) => (
-          <h3>{post.title}</h3>
-        ))}
         {posts && posts.length === 0 && (
           <div className={styles.noposts}>
             <p>Não foram encontrados posts</p>
