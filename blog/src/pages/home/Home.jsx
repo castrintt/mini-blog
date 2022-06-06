@@ -6,14 +6,17 @@ import { useState } from "react";
 import {Link } from 'react-router-dom'
 
 // components
+import PostDetails from '../../components/postDetails/PostDetails.jsx'
+
+//hooks
+import {useFetchDocuments} from '../../hooks/useFetchDocuments.jsx'
 
 
 const Home = () => {
 
 
   const [query, setQuery] = useState("");
-
-  const [posts] = useState([])
+  const {documents: posts, loading} = useFetchDocuments("posts")
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,15 +37,19 @@ const Home = () => {
         <button className="btn btn-dark">Pesquisar</button>
       </form>
       <div className="post-list">
+        {loading && <p>Carregando...</p>}
+        {posts && posts.map((post) => (
+          <h3>{post.title}</h3>
+        ))}
         {posts && posts.length === 0 && (
           <div className={styles.noposts}>
             <p>Não foram encontrados posts</p>
-            <Link to="/posts/create" className="btn">
+            <Link to="/post/create" className="btn">
               Criar primeiro post
             </Link>
           </div>
         )}
-        {posts && posts.map((post) => <PostDetail key={post.id} post={post} />)}
+        {posts && posts.map((post) => <PostDetails key={post.id} post={post} />)}
       </div>
     </div>
   );

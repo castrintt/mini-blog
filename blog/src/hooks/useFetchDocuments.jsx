@@ -18,30 +18,22 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
     // deal with memory leak
     const [cancelled, setCancelled] = useState(false);
 
-    const checkCancelBeforeDispatch = (action) => {
-        if (cancelled) {
-            dispatch(action);
-        }
-    };
-
     useEffect(() => {
 
         async function loadData() {
-            if(cancelled) return
+            if (cancelled) return
 
             setLoading(true)
 
             const collectionRef = await collection(db, docCollection)
 
             try {
-                
+
                 let q;
 
                 //busca
 
                 //dashboard
-
-
 
                 q = await query(collectionRef, orderBy('createdAt', 'desc'))
 
@@ -56,20 +48,20 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
                 setLoading(false)
 
-            }catch(error) {
+            } catch (error) {
                 console.log(error)
                 setError(error.message)
+                setLoading(false)
             }
         }
 
         loadData()
-
     }, [docCollection, search, uid, cancelled])
 
 
     useEffect(() => {
         return () => setCancelled(true)
-    },[])
+    }, [])
 
 
     return {
